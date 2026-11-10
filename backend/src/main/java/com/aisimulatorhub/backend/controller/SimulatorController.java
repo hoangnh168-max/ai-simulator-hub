@@ -64,4 +64,16 @@ public class SimulatorController {
             .orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Simulator not found"));
     }
+
+    @PatchMapping("/{id}/approve")
+    public Simulator approveSimulator(@PathVariable UUID id) {
+        Simulator simulator = repository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Simulator not found"));
+
+        simulator.setStatus("PUBLISHED");
+
+        return repository.save(simulator);
+    }
+
 }
